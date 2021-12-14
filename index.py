@@ -197,9 +197,6 @@ def clickButtons():
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1
-        if hero_clicks > 20:
-            logger('too many hero clicks, try to increase the go_to_work_btn threshold')
-            return
     return len(buttons)
 
 def isHome(hero, buttons):
@@ -244,9 +241,6 @@ def clickGreenBarButtons():
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1
-        if hero_clicks > 20:
-            logger('Too many hero clicks, try to increase the go_to_work_btn threshold')
-            return
     return len(not_working_green_bars)
 
 def clickFullBarButtons():
@@ -326,21 +320,20 @@ def login():
         
         nbRetry = 0
         while(nbRetry < retryNumber):
-            if(not clickBtn(images['unity-loading'], timeout=30)):
+            if(clickBtn(images['unity-loading'], timeout=30)):
                 logger('Unity loading screen not found. Proceeding...')
                 nbRetry = retryNumber
             else:
                 nbRetry = nbRetry + 1
-                logger('Unity loading screen is stuck. Refreshing the page then waiting %d seconds...' % attemptsWait)
+                logger('Unity loading screen is stuck. Refreshing the page')
                 pyautogui.hotkey('ctrl','f5')
-                time.sleep(attemptsWait * 2)
         return
    
     connectWallet()
 
     loginError()
 
-    if clickBtn(images['progress-bar'], name='progressBar', timeout = 30):
+    if clickBtn(images['progress-bar'], name='progressBar', timeout = 20):
         logger('Progress bar screen is stuck. Refreshing the page')
         pyautogui.hotkey('ctrl','f5')
         time.sleep(attemptsWait)
@@ -360,7 +353,7 @@ def connectWallet():
         logger('Connect wallet button detected')
     if clickBtn(images['select-wallet-2'], name='sign button', timeout=15):
         logger('Confirm connect wallet button detected')
-        if clickBtn(images['treasure-hunt-icon'], name='teasureHunt', timeout = 20):
+        if clickBtn(images['treasure-hunt-icon'], name='teasureHunt', timeout = 30):
             logger('Login successfully!')
             login_attempts = 0
             return
