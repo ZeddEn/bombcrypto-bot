@@ -10,7 +10,7 @@
     #
     # [pt_BR] Intervalo de tempo para verificar se há heróis disponíveis para trabalhar
     # Valor padrão (em minutos): 10
-    send_heroes_for_work: 30
+    send_heroes_for_work: 10
     
     # [en_US] Time interval to update heroes position in the map,
     # Default value (in minutes): 3
