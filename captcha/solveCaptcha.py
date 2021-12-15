@@ -50,7 +50,7 @@ def positions(target, threshold=0.80,img = None):
     rectangles, weights = cv2.groupRectangles(rectangles, 1, 0.2)
     return rectangles
 
-def getDigits(d,img, gray=True, threshold=0.78):
+def getDigits(d,img, gray=True, threshold=0.81):
     digits = []
     for i in range(10):
         if gray:
