@@ -278,18 +278,18 @@ def solveCaptcha():
     for position in slider_positions:
         x, y = position
         pyautogui.moveTo(x,y,1)
+        time.sleep(1)
         screenshot = printSreen()
         popup_pos = positions(d['robot'],img=screenshot)
         captcha_img = smallDigitsImg(screenshot, popup_pos[0])
         small_digits = getSmallDigits(captcha_img)
         # print( 'dig: {}, background_digits: {}'.format(digits, background_digits))
-        if small_digits == background_digits:
-            print('FOUND!')
+        if background_digits in small_digits:
+            print('Captch found!')
             pyautogui.mouseUp()
             return
-    print('not found... trying again!')
-    pyautogui.mouseUp()
-    solveCaptcha()
+    print('Captcha not found')
+    pyautogui.click()
     return
 
 if __name__ == '__main__':
