@@ -51,13 +51,16 @@ last_log_is_progress = False
 
 
 def solveCaptchaPuzzle(message):
-    logger('Looking for captcha for %s' % message)
-    if clickBtn(images['robot'], name='solvingCaptcha', timeout = 10):
-        logger('Solving captcha for %s' % message )
-        solveCaptcha()
-    else:
-        logger('Captcha popup not found. Proceeding...')
-        return
+    try:
+        logger('Looking for captcha for %s' % message)
+        if clickBtn(images['robot'], name='solvingCaptcha', timeout = 10):
+            logger('Solving captcha for %s' % message )
+            solveCaptcha()
+        else:
+            logger('Captcha popup not found. Proceeding...')
+            return
+    except:
+        logger('Error while solving captcha')
 
 
 def addRandomness(n, randomn_factor_size=None):
