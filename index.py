@@ -305,7 +305,7 @@ def refreshHeroesPositions():
         logger('🔄 Refreshing Heroes Positions.')
         clickBtn(images['treasure-hunt-icon'])
     else:
-        logger('⏭️ Skipping refreshing Heroes Positions.')
+        logger('⏭️  Skipping refreshing Heroes Positions.')
 
 def login():
     global login_attempts
@@ -429,7 +429,7 @@ def refreshHeroes():
         logger('✔️  {} heroes sent to work'.format(hero_clicks))
         goToGame()
     else:
-        logger('⏭️ Skipping sending heroes to work')
+        logger('⏭️  Skipping sending heroes to work')
 
 def main():
     time.sleep(5)
