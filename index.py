@@ -20,9 +20,8 @@ import yaml
 
 cat = """
 
->>---> Press ctrl + c to kill the bot.
-
->>---> Some configs can be fount in the config.yaml file."""
+Press ctrl + c to kill the bot.
+Some configs can be fount in the config.yaml file."""
 
 
 print(cat)
@@ -39,7 +38,7 @@ hc = HumanClicker()
 
 
 if not ch['enable']:
-    print('>>---> Home feature not enabled')
+    print('Home feature not enabled')
 print('\n')
 
 pyautogui.PAUSE = c['time_intervals']['interval_between_moviments']
@@ -52,15 +51,15 @@ last_log_is_progress = False
 
 def solveCaptchaPuzzle(message):
     try:
-        logger('Looking for captcha for %s' % message)
+        logger('⏳ Looking for captcha for %s' % message)
         if clickBtn(images['robot'], name='solvingCaptcha', timeout = 10):
-            logger('Solving captcha for %s' % message )
+            logger('⏳ Solving captcha for %s' % message )
             solveCaptcha()
         else:
-            logger('Captcha popup not found. Proceeding...')
+            logger('⏭️  Captcha popup not found. Proceeding...')
             return
     except:
-        logger('Error while solving captcha')
+        logger('⚠️  Error while solving captcha')
 
 
 def addRandomness(n, randomn_factor_size=None):
@@ -103,7 +102,7 @@ def loadHeroesToSendHome():
         path = './targets/heroes-to-send-home/' + file
         heroes.append(cv2.imread(path))
 
-    print('>>---> %d heroes that should be sent home loaded' % len(heroes))
+    print('%d heroes that should be sent home loaded' % len(heroes))
     return heroes
 
 if ch['enable']:
@@ -226,9 +225,9 @@ def clickGreenBarButtons():
     offset = 130
 
     green_bars = positions(images['green-bar'], threshold=ct['green_bar'])
-    logger('%d green bars detected' % len(green_bars))
+    logger('🦸 %d green bars detected' % len(green_bars))
     buttons = positions(images['go-work'], threshold=ct['go_to_work_btn'])
-    logger('%d buttons detected' % len(buttons))
+    logger('🦸 %d buttons detected' % len(buttons))
 
 
     not_working_green_bars = []
@@ -236,8 +235,8 @@ def clickGreenBarButtons():
         if not isWorking(bar, buttons):
             not_working_green_bars.append(bar)
     if len(not_working_green_bars) > 0:
-        logger('%d buttons with green bar detected' % len(not_working_green_bars))
-        logger('Clicking in %d heroes' % len(not_working_green_bars))
+        logger('🦸 %d buttons with green bar detected' % len(not_working_green_bars))
+        logger('➕ Clicking in %d heroes' % len(not_working_green_bars))
 
     for (x, y, w, h) in not_working_green_bars:
         moveToWithRandomness(x+offset+(w/2),y+(h/2),1)
@@ -257,7 +256,7 @@ def clickFullBarButtons():
             not_working_full_bars.append(bar)
 
     if len(not_working_full_bars) > 0:
-        logger('Clicking in %d heroes' % len(not_working_full_bars))
+        logger('🦸 Clicking in %d heroes' % len(not_working_full_bars))
 
     for (x, y, w, h) in not_working_full_bars:
         moveToWithRandomness(x+offset+(w/2),y+(h/2),1)
@@ -284,14 +283,14 @@ def goToHeroes():
                 hast_timed_out = time.time()-start > checkHeroScreenStatTimeout
                 if(hast_timed_out):
                     present = True
-                    logger('Heroes screen did not load after %d seconds' % checkHeroScreenStatTimeout)
-                    logger('Refreshing the heroes screen...')
+                    logger('❗ Heroes screen did not load after %d seconds' % checkHeroScreenStatTimeout)
+                    logger('🔄 Refreshing the heroes screen...')
                     login_attempts = 4
                 else:
-                    logger('Waiting for heroes screen to load...' )
+                    logger('⌛ Waiting for heroes screen to load...' )
                     time.sleep(1)
             else:
-                logger('Heroes screen loading is finished')
+                logger('☑️  Heroes screen loading is finished')
                 return True
     else:
         return False
@@ -303,32 +302,32 @@ def goToGame():
 
 def refreshHeroesPositions():
     if(clickBtn(images['go-back-arrow'], timeout = 5)):
-        logger('Refreshing Heroes Positions.')
+        logger('🔄 Refreshing Heroes Positions.')
         clickBtn(images['treasure-hunt-icon'])
     else:
-        logger('Skipping refreshing Heroes Positions.')
+        logger('⏭️ Skipping refreshing Heroes Positions.')
 
 def login():
     global login_attempts
     attemptsWait = 5
     retryNumber=3
 
-    logger('Checking if game has disconnected')
+    logger('⌛ Checking if game has disconnected')
 
     if login_attempts > 3:
         login_attempts = 0
-        logger('Too many login attempts. Refreshing the page then waiting %d seconds...' % attemptsWait)
+        logger('❗ Too many login attempts. Refreshing the page then waiting %d seconds...' % attemptsWait)
         pyautogui.hotkey('ctrl','f5')
         time.sleep(attemptsWait)
         
         nbRetry = 0
         while(nbRetry < retryNumber):
             if(clickBtn(images['unity-loading'], timeout=30)):
-                logger('Unity loading screen not found. Proceeding...')
+                logger('☑️ Unity loading screen not found. Proceeding...')
                 nbRetry = retryNumber
             else:
                 nbRetry = nbRetry + 1
-                logger('Unity loading screen is stuck. Refreshing the page')
+                logger('❗ Unity loading screen is stuck. Refreshing the page')
                 pyautogui.hotkey('ctrl','f5')
         return
    
@@ -337,7 +336,7 @@ def login():
     loginError()
 
     if clickBtn(images['progress-bar'], name='progressBar', timeout = 20):
-        logger('Progress bar screen is stuck. Refreshing the page')
+        logger('❗ Progress bar screen is stuck. Refreshing the page')
         pyautogui.hotkey('ctrl','f5')
         time.sleep(attemptsWait)
         return
@@ -346,24 +345,24 @@ def connectWallet():
     global login_attempts
     
     if clickBtn(images['select-wallet-2'], name='sign button', timeout=5):
-        logger('Confirm connect wallet button detected')
+        logger('🔑 Confirm connect wallet button detected')
 
     loginError()
    
     if clickBtn(images['connect-wallet'], name='connectWalletBtn', timeout = 10):
         solveCaptchaPuzzle('Connect to Wallet')
         login_attempts = login_attempts + 1
-        logger('Connect wallet button detected')
+        logger('🔑Connect wallet button detected')
     if clickBtn(images['select-wallet-2'], name='sign button', timeout=15):
-        logger('Confirm connect wallet button detected')
+        logger('🔑 Confirm connect wallet button detected')
         if clickBtn(images['treasure-hunt-icon'], name='teasureHunt', timeout = 60):
-            logger('Login successfully!')
+            logger('☑️ Login successfully!')
             login_attempts = 0
             return
 
 def loginError():
     if clickBtn(images['ok'], name='okBtn', timeout=5):
-        logger('Error pop-up detected')
+        logger('❗ Error pop-up detected')
         connectWallet()
 
 def sendHeroesHome():
@@ -401,14 +400,14 @@ def sendHeroesHome():
 def refreshHeroes():
     if(goToHeroes()):
 
-        logger('Sending heroes to work.')
+        logger('🔄 Sending heroes to work.')
 
         if c['select_heroes_mode'] == "full":
-            logger('Sending heroes with full stamina bar to work', 'green')
+            logger('⬆️ Sending heroes with full stamina bar to work', 'green')
         elif c['select_heroes_mode'] == "green":
-            logger('Sending heroes with green stamina bar to work', 'green')
+            logger('⬆️ Sending heroes with green stamina bar to work', 'green')
         else:
-            logger('Sending all heroes to work', 'green')
+            logger('⬆️ Sending all heroes to work', 'green')
 
         buttonsClicked = 1
         empty_scrolls_attempts = c['scroll_attemps']
@@ -427,10 +426,10 @@ def refreshHeroes():
                 empty_scrolls_attempts = empty_scrolls_attempts - 1
             scroll()
             time.sleep(2)
-        logger('{} heroes sent to work'.format(hero_clicks))
+        logger('✔️  {} heroes sent to work'.format(hero_clicks))
         goToGame()
     else:
-        logger('Skipping sending heroes to work')
+        logger('⏭️ Skipping sending heroes to work')
 
 def main():
     time.sleep(5)

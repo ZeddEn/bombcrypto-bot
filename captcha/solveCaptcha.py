@@ -263,7 +263,7 @@ def solveCaptcha():
     img = screenshot.copy()
     popup_pos = positions(d['robot'],img=img)
     if len(popup_pos) == 0:
-        print('no captcha popup found!')
+        print('No captcha popup found!')
         return
     img = captchaImg(img, popup_pos[0])
     background_digits = getBackgroundText()
@@ -285,10 +285,10 @@ def solveCaptcha():
         small_digits = getSmallDigits(captcha_img)
         # print( 'dig: {}, background_digits: {}'.format(digits, background_digits))
         if background_digits in small_digits:
-            print('Captch found!')
+            print('✅ Captch found!')
             pyautogui.mouseUp()
             return
-    print('Captcha not found')
+    print('❌ Captcha not found')
     pyautogui.click()
     return
 

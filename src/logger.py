@@ -35,11 +35,11 @@ def logger(message, progress_indicator = False, color = 'default'):
     if progress_indicator:
         if not last_log_is_progress:
             last_log_is_progress = True
-            formatted_message = color_formatted + "[{}] {}".format(formatted_datetime, 'Processing last action: ')
+            formatted_message = color_formatted + "[{}] {}".format(formatted_datetime, '🔍 Processing last action: ')
             sys.stdout.write(formatted_message)
             sys.stdout.flush()
         else:
-            sys.stdout.write(color_formatted + '#')
+            sys.stdout.write(color_formatted + '⏱️ ')
             sys.stdout.flush()
         return
 
