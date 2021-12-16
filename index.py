@@ -52,7 +52,7 @@ last_log_is_progress = False
 
 def solveCaptchaPuzzle(message):
     logger('Looking for captcha for %s' % message)
-    if clickBtn(images['slider'], name='solvingCaptcha', timeout = 10):
+    if clickBtn(images['robot'], name='solvingCaptcha', timeout = 10):
         logger('Solving captcha for %s' % message )
         solveCaptcha()
     else:
@@ -353,7 +353,7 @@ def connectWallet():
         logger('Connect wallet button detected')
     if clickBtn(images['select-wallet-2'], name='sign button', timeout=15):
         logger('Confirm connect wallet button detected')
-        if clickBtn(images['treasure-hunt-icon'], name='teasureHunt', timeout = 120):
+        if clickBtn(images['treasure-hunt-icon'], name='teasureHunt', timeout = 60):
             logger('Login successfully!')
             login_attempts = 0
             return
